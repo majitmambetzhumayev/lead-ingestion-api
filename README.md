@@ -93,6 +93,7 @@ Configure the HTTP module in Make.com:
   "source": "google-forms"
 }
 ```
+Replace {{trigger.var}} with the right var taken from Google Forms
 
 ## Environment Variables
 
