@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
-import { normalizeZapier } from '../services/leadNormalizer';
+import { normalizeMake } from '../services/leadNormalizer';
 import { saveLead } from '../services/database';
 import { syncToNotion } from '../services/notionSync';
 
-export const handleZapierWebhook = async (
+export const handleMakeWebhook = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -11,17 +11,16 @@ export const handleZapierWebhook = async (
   try {
     const payload = req.body;
     
-    console.log('Webhook received:', {
+    console.log('Webhook received from Make:', {
       source: payload.source || 'unknown',
       email: payload.email,
     });
 
-    const normalizedLead = normalizeZapier(payload);
+    const normalizedLead = normalizeMake(payload);
     const savedLead = await saveLead(normalizedLead);
 
-    console.log('Lead saved:', savedLead.id);
+    console.log('✅ Lead saved:', savedLead.id);
 
-    // async notion connection
     syncToNotion(savedLead).catch(err =>
       console.error('Notion sync failed:', err)
     );

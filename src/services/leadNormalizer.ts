@@ -1,6 +1,6 @@
 import { Lead } from '../types/Lead';
 
-export const normalizeZapier = (payload: any): Lead => {
+export const normalizeMake = (payload: any): Lead => {
   // fetches data by matching depending on format, normalizes format
   
   const extractName = (): string => {
