@@ -16,14 +16,17 @@ export const handleMakeWebhook = async (
       email: payload.email,
     });
 
+    console.log('Normalizing lead...');
     const normalizedLead = normalizeMake(payload);
+
+    console.log('Saving to database...');
     const savedLead = await saveLead(normalizedLead);
+    console.log('Lead saved:', savedLead.id);
 
-    console.log('✅ Lead saved:', savedLead.id);
-
-    syncToNotion(savedLead).catch(err =>
-      console.error('Notion sync failed:', err)
-    );
+    console.log('Starting Notion sync...');
+    syncToNotion(savedLead)
+      .then(() => console.log('Notion sync complete'))
+      .catch(err => console.error('Notion sync failed:', err));
 
     res.status(200).json({
       success: true,
@@ -32,6 +35,7 @@ export const handleMakeWebhook = async (
       message: 'Lead received and processed',
     });
   } catch (error) {
+    console.error('Controller error:', error);
     next(error);
   }
 };

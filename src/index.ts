@@ -10,7 +10,7 @@ dotenv.config();
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware global
+// Global iddleware
 app.use(cors());
 app.use(express.json());
 app.use(generalLimiter);
