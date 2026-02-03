@@ -6,7 +6,7 @@ import { Result } from 'pg';
 export const saveLead = async (lead: Lead): Promise<Lead> => {
     //using back ticks here allows for the query to span multiple line for betetr readability
     const query = `
-    INSERT INTO leads (name, email, phone, company, message, buget, source, status)
+    INSERT INTO leads (name, email, phone, company, message, budget, source, status)
     VALUES($1, $2, $3, $4, $5, $6, $7, $8)
     RETURNING *
     `;
